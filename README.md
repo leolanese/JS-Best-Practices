@@ -174,7 +174,7 @@ or make it complete:
 if (values){             // even better: !== 0, !== null and !== undefined
      …
 }
-```javascript
+```
 
 ---
 ### new() vs Object Literals:
@@ -194,7 +194,7 @@ var lunch = [
    'Rice',
    'what the heck is this?'
 ];
-```javascript
+```
 
 -=-
 ### Use function factories

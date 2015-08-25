@@ -275,7 +275,7 @@ The better solution is to add an event listener to the UL parent element.
    <li id="post-5">Item 5</li>
    <li id="post-6">Item 6</li>
 </ul>
-```html
+```javascript
 
 But if you add the event listener to the parent, how will you know which element was clicked?
 Simple:  when the event bubbles up to the UL element, you check the event object's 
@@ -295,9 +295,10 @@ document.getElementById("parent-list").addEventListener("click",function(e) {
     // e.target was the clicked element
     console.log( e.target)
 });
+```javascript
 
 
--=-
+---
 ### Be careful using: parseInt()
 
 ```
@@ -311,7 +312,7 @@ document.getElementById("parent-list").addEventListener("click",function(e) {
   Number('010'); //10
 ```javascript
 
--=-
+---
 ### Beware Loose Types
 When doing mathematical operations, JavaScript can convert numbers to stings:
 ```
@@ -319,7 +320,7 @@ var x = 5 + 7;       // x.valueOf() is 12,  typeof x is a number
 var x = 5 + "7";     // x.valueOf() is 57,  typeof x is a string
 ```javascript
 
--=-
+---
 ### Use coercion to verify lack of existence
 
 ```

@@ -142,3 +142,222 @@ Objects con be set inside object constructor, but this function takes memory spa
 So then the unique Methods still can be access because of the prototype chain and it is using only one space in memory, but properties are going to be different for every new object. 
 
 
+-=-
+### Clean the garbage:
+
+We need to destroy every object we are not using any more. 
+In order to our memory usage, we set to null, so the garbage collector will destroy will destroy it:
+
+```
+// do some thing with the object
+var oObje = new Object;
+
+// set to null = there are no longer any references to the object.
+oObj = null;
+```javascript
+
+-=-
+### Avoid Null Comparisons(value != null)
+
+Values should be checked for what they are “expected to be”, not for what they “aren't expected to be”: is expected to be an array, so you should be checking to see if it is an array.
+
+```
+if (values != null){             // AVOID
+     …
+}
+
+if (values instanceof Array){  // Preferred instanceof ‘operator’
+     …
+}
+
+or make it complete:
+if (values){             // even better: !== 0, !== null and !== undefined
+     …
+}
+```javascript
+
+-=-
+### new() vs Object Literals:
+
+```
+var lunch = new Array();
+lunch[0]='Dosa';
+lunch[1]='Roti';
+lunch[2]='Rice';
+lunch[3]='what the heck is this?';
+
+= 
+
+var lunch = [
+   'Dosa',
+   'Roti',
+   'Rice',
+   'what the heck is this?'
+];
+```javascript
+
+-=-
+### Use function factories
+
+```
+function hello(lang) {
+  
+  return function(firstname,lastname){
+    if(lang === 'en'){
+      console.log('Hello ' + firstname + lastname);
+    }
+    if(lang === 'es'){
+      console.log('Hola ' + firstname + lastname);
+    }
+  }
+  
+}
+
+var en = hello('en');
+var es = hello('es');
+
+en('Leo','Lanese'); // Hello LeoLanese
+es('Leo','Lanese'); // Hola LeoLanese
+```javascript
+
+-=-
+### Obscure js
+
+Accessor setters and getters: 
+Obscure the function and provide encapsulation
+
+```
+function Field(val){
+    this.value = val;
+}
+Field.prototype = {
+    getValue: function(){
+        return this._value;
+    },
+    setValue: function(val){
+        this._value = val;
+    }
+};
+
+var field = new Field("test");
+
+field.setValue("test2")
+field.getValue()
+```javascript
+
+-=-
+### Avoid scope-lookUps 
+Specially if some slow JS process is involved, loops, intervals. 
+
+```
+var foo = 42;
+(function() {
+  (function() {
+    alert(foo); // two scope lookups
+  }());
+}());
+```javascript
+
+
+-=-
+### Use event delegation
+Something needs to happen when each child element is clicked.
+You could add a separate event listener to each individual LI element, but what if 
+'LI' elements are frequently added and removed from the list?
+The better solution is to add an event listener to the UL parent element.  
+
+```
+<ul id="parent-list">
+   <li id="post-1">Item 1</li>
+   <li id="post-2">Item 2</li>
+   <li id="post-3">Item 3</li>
+   <li id="post-4">Item 4</li>
+   <li id="post-5">Item 5</li>
+   <li id="post-6">Item 6</li>
+</ul>
+```html
+
+But if you add the event listener to the parent, how will you know which element was clicked?
+Simple:  when the event bubbles up to the UL element, you check the event object's 
+target property to gain a reference to the actual clicked node:
+
+```
+// using $
+$('parent-list').on('click',function(){
+  if(e.target && e.target.nodeName == "LI") {
+  // List item found!  Output the ID!
+     console.log("List item ",e.target.id.replace("post-")," was clicked!");
+  }	
+})
+
+// using JS Get the parent DIV, add click listener...
+document.getElementById("parent-list").addEventListener("click",function(e) {
+    // e.target was the clicked element
+    console.log( e.target)
+});
+
+
+-=-
+### Be careful using: parseInt()
+
+```
+  parseInt('10'); //10
+  parseInt('010'); //8
+
+  We need to specified the base to use:
+  parseInt('010',10); //10
+
+  Or we can use: 
+  Number('010'); //10
+```javascript
+
+-=-
+### Beware Loose Types
+When doing mathematical operations, JavaScript can convert numbers to stings:
+```
+var x = 5 + 7;       // x.valueOf() is 12,  typeof x is a number
+var x = 5 + "7";     // x.valueOf() is 57,  typeof x is a string
+```javascript
+
+-=-
+### Use coercion to verify lack of existence
+
+```
+if (a || a !== 0) { // + !==0
+   console.log("something is there"); // a is something: !== undefined, !== null and !==""
+}
+```javascript
+
+---
+### Use the array.length out of the array iteration
+Cache length during loops.
+Caching the length can be anywhere up to 190 times faster than repeatedly accessing it.
+
+```
+//count outside
+var count=a.length;
+for(var i=0; i<count; i++){
+    //do nothing as we are measuring time based on count var only 
+}
+```javascript
+
+```
+//calculating count on each iteration
+for(var i=0; i< a.length; i++){
+    //do nothing as we are measuring time based on count var only 
+}
+```javascript
+
+```
+//count inside: fastest
+for(var i=0,count=a.length; i<count; i++){
+    //do nothing as we are measuring time based on count var only 
+}
+```javascript
+
+
+
+
+
+
+

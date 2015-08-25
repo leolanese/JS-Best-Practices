@@ -356,6 +356,49 @@ for(var i=0,count=a.length; i<count; i++){
 }
 ```
 
+--- 
+### Be careful using indexOf: (IE9+, Mobile=?)
+```javascript
+['apple','lemon','banana'].indexOf('lemon'); //returns 1
+['apple','lemon'].indexOf('banana'); //returns -1
+```
+
+---
+### "Don't modify objects I don't own"
+Be careful extending Native Object like Object.prototype
+
+
+### Why: Simply put: if everyone on your team modified objects that they didn’t own, you’d quickly run into naming collisions, incompatible implementations, and maintenance nightmares.
+
+If for some reason you do end up extending the object prototype, ensure that the method doesn't already exist, document it 
+so that the rest of the team is aware why it's necessary. 
+
+```javascript
+	if(typeof Object.prototype.myMethod != 'function'){
+	    Object.prototype.myMethod = function(){
+	         ...
+	    };
+	}
+```
+
+---
+
+### Return shorthand
+```javascript
+if(a == b){
+ return true;
+} else {
+ return false;
+}
+```
+
+```javascript
+// same as
+return (a == b);
+```
+
+---
+
 
 
 

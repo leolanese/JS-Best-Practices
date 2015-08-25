@@ -142,7 +142,7 @@ Objects con be set inside object constructor, but this function takes memory spa
 So then the unique Methods still can be access because of the prototype chain and it is using only one space in memory, but properties are going to be different for every new object. 
 
 
--=-
+---
 ### Clean the garbage:
 
 We need to destroy every object we are not using any more. 
@@ -156,7 +156,7 @@ var oObje = new Object;
 oObj = null;
 ```javascript
 
--=-
+---
 ### Avoid Null Comparisons(value != null)
 
 Values should be checked for what they are “expected to be”, not for what they “aren't expected to be”: is expected to be an array, so you should be checking to see if it is an array.
@@ -176,7 +176,7 @@ if (values){             // even better: !== 0, !== null and !== undefined
 }
 ```javascript
 
--=-
+---
 ### new() vs Object Literals:
 
 ```

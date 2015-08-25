@@ -199,7 +199,7 @@ var lunch = [
 -=-
 ### Use function factories
 
-```
+```javascript
 function hello(lang) {
   
   return function(firstname,lastname){

@@ -148,20 +148,20 @@ So then the unique Methods still can be access because of the prototype chain an
 We need to destroy every object we are not using any more. 
 In order to our memory usage, we set to null, so the garbage collector will destroy will destroy it:
 
-```
+```javascript
 // do some thing with the object
 var oObje = new Object;
 
 // set to null = there are no longer any references to the object.
 oObj = null;
-```javascript
+```
 
 ---
 ### Avoid Null Comparisons(value != null)
 
 Values should be checked for what they are “expected to be”, not for what they “aren't expected to be”: is expected to be an array, so you should be checking to see if it is an array.
 
-```
+```javascript
 if (values != null){             // AVOID
      …
 }
@@ -179,7 +179,7 @@ if (values){             // even better: !== 0, !== null and !== undefined
 ---
 ### new() vs Object Literals:
 
-```
+```javascript
 var lunch = new Array();
 lunch[0]='Dosa';
 lunch[1]='Roti';
@@ -218,15 +218,15 @@ var es = hello('es');
 
 en('Leo','Lanese'); // Hello LeoLanese
 es('Leo','Lanese'); // Hola LeoLanese
-```javascript
+```
 
--=-
+---
 ### Obscure js
 
 Accessor setters and getters: 
 Obscure the function and provide encapsulation
 
-```
+```javascript
 function Field(val){
     this.value = val;
 }
@@ -243,30 +243,30 @@ var field = new Field("test");
 
 field.setValue("test2")
 field.getValue()
-```javascript
+```
 
--=-
+---
 ### Avoid scope-lookUps 
 Specially if some slow JS process is involved, loops, intervals. 
 
-```
+```javascript
 var foo = 42;
 (function() {
   (function() {
     alert(foo); // two scope lookups
   }());
 }());
-```javascript
+```
 
 
--=-
+---
 ### Use event delegation
 Something needs to happen when each child element is clicked.
 You could add a separate event listener to each individual LI element, but what if 
 'LI' elements are frequently added and removed from the list?
 The better solution is to add an event listener to the UL parent element.  
 
-```
+```javascript
 <ul id="parent-list">
    <li id="post-1">Item 1</li>
    <li id="post-2">Item 2</li>
@@ -275,13 +275,13 @@ The better solution is to add an event listener to the UL parent element.
    <li id="post-5">Item 5</li>
    <li id="post-6">Item 6</li>
 </ul>
-```javascript
+```
 
 But if you add the event listener to the parent, how will you know which element was clicked?
 Simple:  when the event bubbles up to the UL element, you check the event object's 
 target property to gain a reference to the actual clicked node:
 
-```
+```javascript
 // using $
 $('parent-list').on('click',function(){
   if(e.target && e.target.nodeName == "LI") {
@@ -295,13 +295,13 @@ document.getElementById("parent-list").addEventListener("click",function(e) {
     // e.target was the clicked element
     console.log( e.target)
 });
-```javascript
+```
 
 
 ---
 ### Be careful using: parseInt()
 
-```
+```javascript
   parseInt('10'); //10
   parseInt('010'); //8
 
@@ -310,51 +310,51 @@ document.getElementById("parent-list").addEventListener("click",function(e) {
 
   Or we can use: 
   Number('010'); //10
-```javascript
+```
 
 ---
 ### Beware Loose Types
 When doing mathematical operations, JavaScript can convert numbers to stings:
-```
+```javascript
 var x = 5 + 7;       // x.valueOf() is 12,  typeof x is a number
 var x = 5 + "7";     // x.valueOf() is 57,  typeof x is a string
-```javascript
+```
 
 ---
 ### Use coercion to verify lack of existence
 
-```
+```javascript
 if (a || a !== 0) { // + !==0
    console.log("something is there"); // a is something: !== undefined, !== null and !==""
 }
-```javascript
+```
 
 ---
 ### Use the array.length out of the array iteration
 Cache length during loops.
 Caching the length can be anywhere up to 190 times faster than repeatedly accessing it.
 
-```
+```javascript
 //count outside
 var count=a.length;
 for(var i=0; i<count; i++){
     //do nothing as we are measuring time based on count var only 
 }
-```javascript
-
 ```
+
+```javascript
 //calculating count on each iteration
 for(var i=0; i< a.length; i++){
     //do nothing as we are measuring time based on count var only 
 }
-```javascript
-
 ```
+
+```javascript
 //count inside: fastest
 for(var i=0,count=a.length; i<count; i++){
     //do nothing as we are measuring time based on count var only 
 }
-```javascript
+```
 
 
 

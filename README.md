@@ -398,10 +398,142 @@ return (a == b);
 ```
 
 ---
+### DRY (Don't Repeat Yourself) 
+If you are repeating yourself, you're doing it wrong (typical case is when you are C&Pasting and change just the values). 
+Avoid repetition specially where JS is slow.
+```javascript
+if (1 === 'activate'){
+  sound.play();
+}
+if (2 === 'activate'){
+  sound.play();
+}
+if (3 === 'activate'){
+  sound.play();
+}
 
+// put all the properties within array
+var obj = ['active','active','active']
 
+// or create an Object Literal
+var obj = {
+  "1": "active",
+  "2": "active",
+  "3": "active"
+};
 
+$.each( obj, function( key, value ) {
+  console.log( key + ": " + value );
+});
+```
+---
+### Avoid scope-lookUps 
+Specially if some slow JS process is involved, loops, intervals. 
 
+```javascript
+var foo = 42;
+(function() {
+  (function() {
+    alert(foo); // two scope lookups
+  }());
+```
+---
+### Avoid use eval() or with()
+Use them Only for deserialisation (e.g. evaluating RPC responses)
 
+---
+### Be careful using: parseInt()
+```javascript
+  parseInt('10'); //10
+  parseInt('010'); //8
 
+  We need to specified the base to use:
+  parseInt('010',10); //10
+
+  Or we can use: 
+  Number('010'); //10
+```
+---
+### Avoid Global variables
+Global are slow don’t go window
+
+---
+Avoid != null comparison
+```javascript
+//AVOID
+var n !== nul
+
+//USE
+use instanceof instead
+```
+---
+### Beware Loose Type
+When doing mathematical operations, JavaScript can convert numbers to stings:
+```javascript
+var x = 5 + 7;       // x.valueOf() is 12,  typeof x is a number
+var x = 5 + "7";     // x.valueOf() is 57,  typeof x is a string
+```
+---
+### Use the array.length out of the array iteration
+```javascript
+Cache length during loops.
+Caching the length can be anywhere up to 190 times faster than repeatedly accessing it.
+
+//count outside
+var count=a.length;
+for(var i=0; i<count; i++){
+    //do nothing as we are measuring time based on count var only 
+}
+
+//calculating count on each iteration
+for(var i=0; i< a.length; i++){
+    //do nothing as we are measuring time based on count var only 
+}
+
+//count inside: fastest
+for(var i=0,count=a.length; i<count; i++){
+    //do nothing as we are measuring time based on count var only 
+}
+
+// TEST: http://jsperf.com/for-count-inside-and-outside
+```
+---
+### "Don't modify objects I don't own"
+Be careful extending Native Objects, like Object.prototype
+My point is that you should treat the already-existing JavaScript objects as a library of utilities. 
+Don't override methods, don't add new methods, don't remove existing methods.
+When you are the only one working on a project, it is easy to get away with these types of modifications because you 
+Know them and expect them. When working with a team on a large project, making changes like this cause mass confusion and a lot of lost time.
+
+This is quite different from extending your own custom object properties. 
+It's generally considered bad practice, and modifying it should only be a last resort.
+It looks like properly extending native objects, unlike host ones, is actually not all that bad. 
+This is of course considering that we are talking about standard objects and methods. 
+Extending native built-ins with custom methods immediately makes "collision" problem apparent. It violates "don't 
+modify objects you don't own" principle, and makes code not future-proof.
+Simply put: if everyone on your team modified objects that they didn’t own, you’d quickly run into naming collisions, incompatible implementations, and maintenance nightmares.
+
+If for some reason you do end up extending the object prototype, ensure that the method doesn't already exist, document it 
+so that the rest of the team is aware why it's necessary. 
+
+```javascript
+if(typeof Object.prototype.myMethod != 'function'){
+    Object.prototype.myMethod = function(){
+         ...
+    };
+}
+```
+---
+### Extra consideration
+- Use a JavaScript quality Validator like www.jslint.com (Douglas Crockford's JavaScript Lint) or JSHint
+- Use Profiling Tools
+- Bundle the js: Pack all JS and CSS
+- Remove comments
+- Remove duplication
+- Minify JS and CSS
+- Obfuscate: Technique to reduce the name of the all variables in the code: JSON, JS, css, etc
+- GZIP compression: Enable file compression using mod_gzip Apache on server side
+- deflate compression': Enable file compression using mod_deflate Apache on server side
+- server caching: avoiding to generate this big process on every request on server
+- Client-side caching 
 

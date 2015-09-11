@@ -498,6 +498,61 @@ for(var i=0,count=a.length; i<count; i++){
 // TEST: http://jsperf.com/for-count-inside-and-outside
 ```
 ---
+### betterTypeOf:
+Do a typeof (better use betterTypeOf) check to prevent the app from executing input that is not a valid function at all.
+
+betterTypeOf:
+```javascript
+var betterTypeOf = function(obj) {
+  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+}
+```
+
+typeof test:
+```javascript
+var n = new Array();
+typeof(n); // object :(
+
+typeof(null); // "object"
+betterTypeOf(null); // "null"
+
+typeof([1,2]); // "object"
+betterTypeOf([1,2]) // "array"
+
+console.log(typeof null); // BUG :(
+
+var n = [];
+console.log(typeOf n): // Object? Not Array
+
+var n2 = null;
+console.log(typeOf n2): // Object? Not null
+
+function Person(name) {
+    this.name = name;
+}
+var e = new Person('Jane'); // function Constructor
+console.log(typeof e); // object, that fine!
+```
+
+betterTypeOf test:
+```javascript
+betterTypeOf(null); // null
+betterTypeOf(NaN); // number
+betterTypeOf({a: 4}); //"object"
+betterTypeOf([1, 2, 3]); //"array"
+(function() {console.log(toType(arguments))})(); //arguments
+betterTypeOf(new ReferenceError); //"error"
+betterTypeOf(new Date); //"date"
+betterTypeOf(/a-z/); //"regexp"
+betterTypeOf(Math); //"math"
+betterTypeOf(JSON); //"json"
+betterTypeOf(new Number(4)); //"number"
+betterTypeOf(new String("abc")); //"string"
+betterTypeOf(new Boolean(true)); //"boolean"
+```
+
+
+---
 ### "Don't modify objects I don't own"
 Be careful extending Native Objects, like Object.prototype
 My point is that you should treat the already-existing JavaScript objects as a library of utilities. 

@@ -1,5 +1,5 @@
-# JS-Best-Practices
-A place to debate about the best way to code good JS
+# A JS-Best-Practices and Recomendations Compendium:
+A place to debate about the best way to code good performance javaScript
 
 ## Table of contents
 

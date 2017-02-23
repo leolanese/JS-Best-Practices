@@ -592,3 +592,23 @@ if(typeof Object.prototype.myMethod != 'function'){
 - server caching: avoiding to generate this big process on every request on server
 - Client-side caching 
 
+
+# Thanks:
+<pre>
+Inspired by the angular-base project (Seed project for angular apps.):
+https://github.com/angular/angular-base
+</pre>
+
+## Leo Lanese, I build websites, London, UK<br>
+
+# My Portfolio<br>
+<a href="http://www.leolanese.com" target="_blank">http://www.leolanese.com</a><br>
+
+# My LAB<br>
+<a href="http://www.rwdlab.com" target="_blank">http://www.rwdlab.com</a><br>
+
+# Twitter:<br>
+<a href="http://twitter.com/LeoLaneseltd" target="_blank">http://twitter.com/LeoLaneseltd</a><br>
+
+# Questions / Suggestion?<br>
+<a href="mail:to">angularjs@leolanese.com</a><br>
